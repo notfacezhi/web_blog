@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>AETHER | Refined Minimalist System</title>
+    
+    <!-- Load High-Quality Sans-Serif Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;700;900&display=swap" rel="stylesheet"/>
+    
+    <style>
+        :root {
+            /* Minimalist Core Colors */
+            --theme-bg: #ffffff;
+            --theme-bg-alt: #fbfbfb;
+            --theme-text: #000000;
+            --theme-text-muted: #888888;
+            --theme-border: #e0e0e0;
+            --theme-border-dark: #000000;
+            
+            /* Typography Tokens */
+            --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            
+            /* Precision Spacing */
+            --space-unit: 1rem;
+        }
+
+        /* Base Resets */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            border-radius: 0 !important;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        html { 
+            scroll-behavior: smooth; 
+            font-size: 16px;
+        }
+
+        body {
+            background-color: var(--theme-bg);
+            color: var(--theme-text);
+            font-family: var(--font-main);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background-color: var(--theme-text);
+            color: var(--theme-bg);
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 4vw;
+            gap: 100px;
+        }
+
+        /* Utility Classes */
+        .flex { display: flex; }
+        .grid { display: grid; }
+        .justify-between { justify-content: space-between; }
+        .justify-center { justify-content: center; }
+        .items-center { align-items: center; }
+        .uppercase { text-transform: uppercase; }
+        .tracking-tight { letter-spacing: -0.06em; }
+        .tracking-wide { letter-spacing: 0.15em; }
+        .font-light { font-weight: 200; }
+        .font-bold { font-weight: 700; }
+
+        /* Global Image Style */
+        .minimal-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: filter 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .img-container {
+            overflow: hidden;
+            background-color: var(--theme-bg-alt);
+        }
+
+        .img-container:hover .minimal-img {
+            filter: grayscale(0%);
+            transform: scale(1.05);
+        }
+
+        /* Reveal Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .reveal {
+            animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Navigation */
+        .nav-header {
+            width: 100%;
+            height: 80px;
+            border-bottom: 1px solid var(--theme-border);
+            position: fixed;
+            top: 0;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: saturate(180%) blur(20px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+        }
+
+        .brand-logo {
+            font-weight: 900;
+            font-size: 1.25rem;
+            text-decoration: none;
+            color: var(--theme-text);
+            flex-shrink: 0;
+        }
+
+        .nav-links {
+            list-style: none;
+            gap: 3rem;
+            flex: 1; /* Occupy remaining space to enable centering */
+            display: flex;
+            justify-content: center; /* Center links in the navigation bar */
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--theme-text);
+            font-size: 0.7rem;
+            font-weight: 500;
+            opacity: 0.4;
+            transition: opacity 0.4s ease;
+        }
+
+        .nav-links a:hover { opacity: 1; }
+
+        .nav-location {
+            font-size: 0.6rem; 
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            align-items: center;
+            padding-top: 80px;
+            gap: 4vw;
+        }
+
+        .hero-text-content h1 {
+            font-size: clamp(4rem, 12vw, 12rem);
+            font-weight: 900;
+            line-height: 0.85;
+            margin-left: -0.05em;
+            margin-bottom: 4rem;
+        }
+
+        .hero-visual {
+            height: 70vh;
+            border-left: 1px solid var(--theme-border);
+            padding-left: 4vw;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-img-box {
+            width: 100%;
+            height: 100%;
+            max-height: 600px;
+        }
+
+        .hero-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            grid-column: span 2;
+            padding-bottom: 4rem;
+        }
+
+        /* Section Header */
+        .section-header {
+            border-top: 1px solid var(--theme-text);
+            padding-top: 1.5rem;
+            margin-bottom: 6rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .section-label {
+            font-size: 0.65rem;
+            font-weight: 800;
+        }
+
+        /* Section Padding */
+        .section-padding {
+            padding: 10rem 0;
+        }
+
+        /* Concept Section */
+        .concept-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4vw;
+            align-items: start;
+        }
+
+        .concept-text {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 200;
+            line-height: 1.1;
+        }
+
+        .concept-img-wide {
+            grid-column: span 2;
+            height: 50vh;
+            margin-top: 4rem;
+        }
+
+        /* Archive List */
+        .archive-item {
+            display: grid;
+            grid-template-columns: 80px 100px 1.5fr 1fr 1fr;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--theme-border);
+            text-decoration: none;
+            color: var(--theme-text);
+            transition: all 0.4s ease;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .archive-item:hover {
+            background-color: var(--theme-bg-alt);
+            padding-left: 1rem;
+        }
+
+        .archive-thumb {
+            width: 100px;
+            height: 60px;
+            background-color: #eee;
+        }
+
+        .archive-year { font-size: 0.7rem; opacity: 0.4; }
+        .archive-title { font-size: 1.5rem; font-weight: 700; }
+        .archive-cat { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.5; }
+
+        /* System Essence */
+        .essence-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border: 1px solid var(--theme-border);
+            background-color: var(--theme-border);
+            gap: 1px;
+        }
+
+        .essence-card {
+            background-color: var(--theme-bg);
+            padding: 4rem;
+            display: flex;
+            flex-direction: column;
+            gap: 4rem;
+        }
+
+        .essence-card h3 { font-size: 1.75rem; font-weight: 800; margin-bottom: 1rem; }
+        .essence-card p { font-size: 0.9rem; opacity: 0.6; font-weight: 300; }
+
+        /* Specifications */
+        .spec-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background-color: var(--theme-border);
+            border: 1px solid var(--theme-border);
+        }
+
+        .spec-box {
+            background-color: var(--theme-bg);
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+
+        .spec-label { font-size: 0.6rem; font-weight: 800; opacity: 0.4; }
+        .spec-value { font-size: 2rem; font-weight: 200; }
+
+        /* Footer */
+        footer {
+            padding: 8rem 0 4rem;
+            border-top: 1px solid var(--theme-border);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4vw;
+            padding-bottom: 4rem;
+        }
+
+        .footer-title { font-size: 0.65rem; font-weight: 900; margin-bottom: 2rem; }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 0.5rem; }
+        .footer-links a { text-decoration: none; color: var(--theme-text); font-size: 0.8rem; opacity: 0.5; }
+
+        @media (max-width: 1024px) {
+            .hero, .concept-grid, .essence-grid, .spec-grid, .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero-visual, .hero-meta { display: none; }
+            .archive-item { grid-template-columns: 60px 1fr 1fr; }
+            .archive-thumb { display: none; }
+            .nav-links { display: none; } /* Hide links on mobile for cleaner look */
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 3px; }
+        ::-webkit-scrollbar-track { background: var(--theme-bg); }
+        ::-webkit-scrollbar-thumb { background: var(--theme-text); }
+
+    </style>
+</head>
+<body>
+
+    <!-- Main Navigation -->
+    <nav class="nav-header">
+        <div class="container flex justify-between items-center">
+            <!-- Brand Identity -->
+            <a href="#" class="brand-logo tracking-tight">AETHER®</a>
+            
+            <!-- Navigation Links centered using flex: 1 -->
+            <ul class="nav-links uppercase">
+                <li><a href="#concept" class="tracking-wide">Concept</a></li>
+                <li><a href="#archive" class="tracking-wide">Archive</a></li>
+                <li><a href="#system" class="tracking-wide">System</a></li>
+                <li><a href="#footer" class="tracking-wide">Contact</a></li>
+            </ul>
+            
+            <!-- Location Identifier -->
+            <div class="nav-location uppercase tracking-wide">Studio / Berlin</div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Hero Section -->
+        <section class="hero reveal">
+            <div class="hero-text-content">
+                <h1 class="tracking-tight uppercase">Void<br/>As<br/>Pure</h1>
+            </div>
+            <div class="hero-visual">
+                <div class="img-container hero-img-box">
+                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop" 
+                         alt="Architectural Geometry" 
+                         class="minimal-img"
+                         onerror="this.src='https://via.placeholder.com/800x1200?text=Architecture'">
+                </div>
+            </div>
+            <div class="hero-meta">
+                <p class="hero-desc">
+                    Exploration of the architectural pause. Aether defines space not by what is present, but by the resonance of what remains after reduction.
+                </p>
+                <div class="uppercase tracking-wide" style="font-size: 0.7rem; font-weight: 800;">
+                    Visual System 2025 ↓
+                </div>
+            </div>
+        </section>
+
+        <!-- 01 Concept -->
+        <section id="concept" class="section-padding reveal">
+            <div class="section-header">
+                <span class="section-label uppercase tracking-wide">01 / Concept</span>
+                <span style="font-size: 0.65rem; opacity: 0.4;">Structural Silence</span>
+            </div>
+            <div class="concept-grid">
+                <p class="concept-text tracking-tight">
+                    The image is the shadow of the structure. In our system, photography acts as a weight, grounding the ethereal nature of white space.
+                </p>
+                <p style="font-weight: 300; opacity: 0.6; line-height: 1.8;">
+                    By stripping color and context, we invite the observer to focus on the interplay of light and shadow, much like how our grid system defines the flow of information without becoming the information itself.
+                </p>
+                <div class="img-container concept-img-wide">
+                    <img src="https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?q=80&w=2067&auto=format&fit=crop" 
+                         alt="Abstract Minimal Light" 
+                         class="minimal-img"
+                         onerror="this.src='https://via.placeholder.com/1600x600?text=Abstract+Void'">
+                </div>
+            </div>
+        </section>
+
+        <!-- 02 Archive -->
+        <section id="archive" class="section-padding reveal">
+            <div class="section-header">
+                <span class="section-label uppercase tracking-wide">02 / Archive</span>
+                <span style="font-size: 0.65rem; opacity: 0.4;">Projects</span>
+            </div>
+            <div class="archive-list">
+                <a href="#" class="archive-item">
+                    <span class="archive-year">2024</span>
+                    <div class="img-container archive-thumb">
+                        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=2070&auto=format&fit=crop" alt="P1" class="minimal-img">
+                    </div>
+                    <span class="archive-title tracking-tight">Structural Identity</span>
+                    <span class="archive-cat">Identity</span>
+                    <span style="text-align: right;">→</span>
+                </a>
+                <a href="#" class="archive-item">
+                    <span class="archive-year">2023</span>
+                    <div class="img-container archive-thumb">
+                        <img src="https://images.unsplash.com/photo-1449034446853-66c86144b0ad?q=80&w=2070&auto=format&fit=crop" alt="P2" class="minimal-img">
+                    </div>
+                    <span class="archive-title tracking-tight">Monolith Interface</span>
+                    <span class="archive-cat">UI System</span>
+                    <span style="text-align: right;">→</span>
+                </a>
+                <a href="#" class="archive-item">
+                    <span class="archive-year">2023</span>
+                    <div class="img-container archive-thumb">
+                        <img src="https://images.unsplash.com/photo-1515378960530-7c0da6231fb1?q=80&w=2070&auto=format&fit=crop" alt="P3" class="minimal-img">
+                    </div>
+                    <span class="archive-title tracking-tight">Silent Typology</span>
+                    <span class="archive-cat">Print</span>
+                    <span style="text-align: right;">→</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- 03 System Essence -->
+        <section id="system" class="section-padding reveal">
+            <div class="section-header">
+                <span class="section-label uppercase tracking-wide">03 / System</span>
+                <span style="font-size: 0.65rem; opacity: 0.4;">Foundation</span>
+            </div>
+            <div class="essence-grid">
+                <div class="essence-card">
+                    <div class="img-container" style="height: 120px; width: 100%;">
+                        <img src="https://images.unsplash.com/photo-1505330622279-bf7d7fc918f4?q=80&w=2070&auto=format&fit=crop" alt="Grid" class="minimal-img">
+                    </div>
+                    <div>
+                        <h3 class="uppercase tracking-tight">Geometry</h3>
+                        <p>Mathematical rigor applied to every layout. The 12-column grid is the invisible skeleton of the Aether system.</p>
+                    </div>
+                </div>
+                <div class="essence-card">
+                    <div class="img-container" style="height: 120px; width: 100%;">
+                        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop" alt="Type" class="minimal-img">
+                    </div>
+                    <div>
+                        <h3 class="uppercase tracking-tight">Weight</h3>
+                        <p>Contrast as a structural element. We use typography to create hierarchy through massive scale and delicate detail.</p>
+                    </div>
+                </div>
+                <div class="essence-card">
+                    <div class="img-container" style="height: 120px; width: 100%;">
+                        <img src="https://images.unsplash.com/photo-1508615039623-a25605d2b022?q=80&w=2070&auto=format&fit=crop" alt="Void" class="minimal-img">
+                    </div>
+                    <div>
+                        <h3 class="uppercase tracking-tight">Negative</h3>
+                        <p>White space is not empty. It is a purposeful choice that directs the user's journey through the architecture.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 04 Specifications -->
+        <section class="section-padding reveal">
+            <div class="section-header">
+                <span class="section-label uppercase tracking-wide">04 / Specs</span>
+                <span style="font-size: 0.65rem; opacity: 0.4;">Metadata</span>
+            </div>
+            <div class="spec-grid">
+                <div class="spec-box">
+                    <span class="spec-label uppercase tracking-wide">Image Filter</span>
+                    <span class="spec-value">100% G.</span>
+                </div>
+                <div class="spec-box">
+                    <span class="spec-label uppercase tracking-wide">Grid Units</span>
+                    <span class="spec-value">12-COL</span>
+                </div>
+                <div class="spec-box">
+                    <span class="spec-label uppercase tracking-wide">Baseline</span>
+                    <span class="spec-value">04 PX</span>
+                </div>
+                <div class="spec-box">
+                    <span class="spec-label uppercase tracking-wide">Max Width</span>
+                    <span class="spec-value">1600 PX</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer id="footer">
+            <div class="footer-grid">
+                <div>
+                    <h4 class="footer-title uppercase tracking-wide">AETHER STUDIO</h4>
+                    <p style="font-size: 0.8rem; opacity: 0.5; font-weight: 300;">Designing the silence within the noise.</p>
+                </div>
+                <div>
+                    <h4 class="footer-title uppercase tracking-wide">Nav</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Index</a></li>
+                        <li><a href="#">System</a></li>
+                        <li><a href="#">Archive</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title uppercase tracking-wide">Connect</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">Mail</a></li>
+                    </ul>
+                </div>
+                <div style="text-align: right;">
+                    <div class="brand-logo tracking-tight">AETHER®</div>
+                    <p style="font-size: 0.6rem; opacity: 0.3; margin-top: 1rem;">© 2025 ALL RIGHTS RESERVED</p>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+</body>
+</html>
