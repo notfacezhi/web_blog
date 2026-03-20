@@ -1,10 +1,91 @@
 document.addEventListener('DOMContentLoaded', function() {
-    initTableOfContents();
+    loadArticle();
     initBackToTop();
     initShareButton();
     initCommentForm();
-    initScrollSpy();
 });
+
+// 配置marked.js
+marked.setOptions({
+    breaks: true,
+    gfm: true,
+    headerIds: true,
+    mangle: false
+});
+
+// 加载并渲染文章
+function loadArticle() {
+    // 从URL获取文章ID,默认为article-1
+    const urlParams = new URLSearchParams(window.location.search);
+    const articleId = urlParams.get('id') || 'article-1';
+    
+    // 获取文章数据
+    const article = getArticle(articleId);
+    
+    if (!article) {
+        console.error('文章未找到');
+        return;
+    }
+    
+    // 渲染文章元信息
+    renderArticleMeta(article);
+    
+    // 渲染Markdown内容
+    renderMarkdownContent(article.content);
+    
+    // 渲染完成后初始化目录
+    initTableOfContents();
+    initScrollSpy();
+}
+
+// 渲染文章元信息
+function renderArticleMeta(article) {
+    // 更新标题
+    document.title = `${article.title} | 内容的艺术`;
+    
+    // 更新分类和日期
+    const metaContainer = document.querySelector('.article-meta');
+    if (metaContainer) {
+        const categoriesHTML = article.categories.map(cat => 
+            `<a href="#" class="category-link">${cat}</a>`
+        ).join('<span class="meta-separator">,</span>');
+        
+        const dateObj = new Date(article.date);
+        const dateStr = `${dateObj.getFullYear()}年${dateObj.getMonth() + 1}月${dateObj.getDate()}日`;
+        
+        metaContainer.innerHTML = `
+            ${categoriesHTML}
+            <span class="meta-date">${dateStr}</span>
+        `;
+    }
+    
+    // 更新文章标题
+    const titleElement = document.querySelector('.article-title');
+    if (titleElement) {
+        titleElement.textContent = article.title;
+    }
+    
+    // 更新作者
+    const authorElement = document.querySelector('.article-author .author-link');
+    if (authorElement) {
+        authorElement.textContent = `作者: ${article.author}`;
+    }
+}
+
+// 渲染Markdown内容
+function renderMarkdownContent(markdown) {
+    const contentContainer = document.querySelector('.article-content');
+    if (!contentContainer) {
+        console.error('文章内容容器未找到');
+        return;
+    }
+    
+    // 使用marked.js将Markdown转换为HTML
+    const htmlContent = marked.parse(markdown);
+    
+    // 插入渲染后的HTML
+    contentContainer.innerHTML = htmlContent;
+}
 
 function initTableOfContents() {
     const tocNav = document.getElementById('tocNav');
