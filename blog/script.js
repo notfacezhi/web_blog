@@ -1,8 +1,65 @@
+// 加载页头
+function loadHeader() {
+    const headerHTML = `
+        <nav class="nav-header">
+            <div class="container flex items-center">
+                <a href="index.html" class="brand-logo">内容的艺术</a>
+                <ul class="nav-links">
+                    <li><a href="about.html">关于</a></li>
+                    <li><a href="contributors.html">贡献者</a></li>
+                    <li><a href="index.html">全部文章</a></li>
+                </ul>
+            </div>
+        </nav>
+    `;
+    const headerPlaceholder = document.getElementById('header-placeholder');
+    if (headerPlaceholder) {
+        headerPlaceholder.innerHTML = headerHTML;
+    }
+}
+
+// 加载页脚
+function loadFooter() {
+    const footerHTML = `
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-grid">
+                    <div>
+                        <h4 class="footer-title">内容的艺术</h4>
+                        <p class="footer-desc">为创作者提供实用的内容策略。</p>
+                    </div>
+                    <div>
+                        <h4 class="footer-title">联系方式</h4>
+                        <ul class="footer-links">
+                            <li><a href="#">微博</a></li>
+                            <li><a href="#">知乎</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>© 2026 内容的艺术. 保留所有权利。</p>
+                </div>
+            </div>
+        </footer>
+    `;
+    const footerPlaceholder = document.getElementById('footer-placeholder');
+    if (footerPlaceholder) {
+        footerPlaceholder.innerHTML = footerHTML;
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-    loadArticle();
+    loadHeader();
+    loadFooter();
+    
+    // 只在文章页面加载文章相关功能
+    if (document.getElementById('commentForm')) {
+        loadArticle();
+        initShareButton();
+        initCommentForm();
+    }
+    
     initBackToTop();
-    initShareButton();
-    initCommentForm();
 });
 
 // 配置marked.js
@@ -15,15 +72,21 @@ marked.setOptions({
 
 // 加载并渲染文章
 function loadArticle() {
-    // 从URL获取文章ID,默认为article-1
+    // 从URL获取文章ID
     const urlParams = new URLSearchParams(window.location.search);
-    const articleId = urlParams.get('id') || 'article-1';
+    const articleId = urlParams.get('id');
+    
+    if (!articleId) {
+        console.error('未指定文章ID');
+        return;
+    }
     
     // 获取文章数据
     const article = getArticle(articleId);
     
     if (!article) {
         console.error('文章未找到');
+        document.querySelector('.article-content').innerHTML = '<p>文章未找到</p>';
         return;
     }
     
@@ -32,6 +95,9 @@ function loadArticle() {
     
     // 渲染Markdown内容
     renderMarkdownContent(article.content);
+    
+    // 渲染相关文章
+    renderRelatedArticles(article);
     
     // 渲染完成后初始化目录
     initTableOfContents();
@@ -85,6 +151,55 @@ function renderMarkdownContent(markdown) {
     
     // 插入渲染后的HTML
     contentContainer.innerHTML = htmlContent;
+}
+
+// 渲染相关文章
+function renderRelatedArticles(currentArticle) {
+    const relatedContainer = document.getElementById('relatedArticles');
+    if (!relatedContainer) return;
+    
+    const allArticles = getAllArticles();
+    
+    // 过滤掉当前文章,找到相关文章(同类别或同标签)
+    let relatedArticles = allArticles.filter(article => {
+        if (article.id === currentArticle.id) return false;
+        
+        // 检查是否有相同的分类或标签
+        const hasCommonCategory = article.categories.some(cat => 
+            currentArticle.categories.includes(cat)
+        );
+        const hasCommonTag = article.tags && currentArticle.tags && 
+            article.tags.some(tag => currentArticle.tags.includes(tag));
+        
+        return hasCommonCategory || hasCommonTag;
+    });
+    
+    // 限制最多3篇
+    relatedArticles = relatedArticles.slice(0, 3);
+    
+    if (relatedArticles.length === 0) {
+        relatedContainer.innerHTML = '<p>暂无相关文章</p>';
+        return;
+    }
+    
+    let html = '';
+    relatedArticles.forEach(article => {
+        const dateObj = new Date(article.date);
+        const dateStr = `${dateObj.getFullYear()}年${dateObj.getMonth() + 1}月${dateObj.getDate()}日`;
+        
+        html += `
+            <a href="article.html?id=${article.id}" class="related-card">
+                <div class="related-meta">
+                    <span class="related-category">${article.categories[0]}</span>
+                    <span class="related-date">${dateStr}</span>
+                </div>
+                <h4 class="related-card-title">${article.title}</h4>
+                <p class="related-excerpt">${article.excerpt}</p>
+            </a>
+        `;
+    });
+    
+    relatedContainer.innerHTML = html;
 }
 
 function initTableOfContents() {
@@ -198,23 +313,17 @@ function initCommentForm() {
     commentForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
-        const name = document.getElementById('commentName').value;
-        const email = document.getElementById('commentEmail').value;
         const text = document.getElementById('commentText').value;
         
         const commentItem = document.createElement('div');
         commentItem.className = 'comment-item';
         
         const now = new Date();
-        const dateStr = now.toLocaleDateString('en-US', { 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
-        });
+        const dateStr = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日`;
         
         commentItem.innerHTML = `
             <div class="comment-header">
-                <strong class="comment-author">${escapeHtml(name)}</strong>
+                <strong class="comment-author">匿名用户</strong>
                 <span class="comment-date">${dateStr}</span>
             </div>
             <p class="comment-text">${escapeHtml(text)}</p>
@@ -226,7 +335,7 @@ function initCommentForm() {
         
         commentItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         
-        showNotification('Comment posted successfully!');
+        showNotification('评论发表成功!');
     });
 }
 

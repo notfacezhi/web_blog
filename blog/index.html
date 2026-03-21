@@ -3,190 +3,41 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>I stopped guessing what to write and started eavesdropping instead | The Art of Content</title>
+    <title>全部文章 | 内容的艺术</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;700;900&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="style.css">
-    
-    <!-- Markdown渲染库 -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
 
     <!-- Navigation -->
-    <nav class="nav-header">
-        <div class="container flex items-center">
-            <a href="#" class="brand-logo">内容的艺术</a>
-            <ul class="nav-links">
-                <li><a href="#about">关于</a></li>
-                <li><a href="#contributors">贡献者</a></li>
-                <li><a href="#archives">全部文章</a></li>
-            </ul>
-        </div>
-    </nav>
+    <div id="header-placeholder"></div>
 
     <!-- Back to Top Button -->
     <button id="backToTop" class="back-to-top" aria-label="Back to top">↑</button>
 
-    <!-- Share Button -->
-    <div class="share-container">
-        <button id="shareBtn" class="share-btn" aria-label="Share article">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="18" cy="5" r="3"></circle>
-                <circle cx="6" cy="12" r="3"></circle>
-                <circle cx="18" cy="19" r="3"></circle>
-                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-            </svg>
-        </button>
-        <div id="shareMenu" class="share-menu">
-            <button data-platform="twitter">Twitter</button>
-            <button data-platform="linkedin">LinkedIn</button>
-            <button data-platform="copy">Copy Link</button>
-        </div>
-    </div>
-
     <main class="container">
-        <!-- Article Header -->
-        <article class="article-wrapper">
-            <header class="article-header">
-                <div class="article-meta">
-                    <a href="#" class="category-link">内容策略</a>
-                    <span class="meta-separator">,</span>
-                    <a href="#" class="category-link">内容创作</a>
-                    <span class="meta-date">2026年3月12日</span>
-                </div>
-                
-                <h1 class="article-title">我不再猜测写什么,而是开始倾听</h1>
-                
-                <div class="article-author">
-                    <a href="#" class="author-link">作者: 张明</a>
-                </div>
-                
-                <div class="article-divider"></div>
+        <article class="archive-wrapper">
+            <header class="archive-header">
+                <h1 class="archive-title">全部文章</h1>
             </header>
 
-            <!-- Article Content -->
-            <div class="article-content">
-                <!-- 内容将由JavaScript从Markdown渲染 -->
-                <p>加载中...</p>
+            <div class="archive-content">
+                <!-- 文章列表 -->
+                <section class="archive-main">
+                    <div class="articles-list" id="articlesList">
+                        <!-- 文章列表将由JavaScript动态加载 -->
+                    </div>
+                </section>
             </div>
-
-            <!-- Related Articles -->
-            <section class="related-articles">
-                <h3 class="related-title">相关文章</h3>
-                <div class="related-grid">
-                    <a href="#" class="related-card">
-                        <div class="related-meta">
-                            <span class="related-category">内容策略</span>
-                            <span class="related-date">2026年3月8日</span>
-                        </div>
-                        <h4 class="related-card-title">如何构建真正被使用的内容日历</h4>
-                        <p class="related-excerpt">大多数内容日历都死在电子表格里。这里教你如何构建一个真正推动执行的日历。</p>
-                    </a>
-                    
-                    <a href="#" class="related-card">
-                        <div class="related-meta">
-                            <span class="related-category">研究方法</span>
-                            <span class="related-date">2026年3月5日</span>
-                        </div>
-                        <h4 class="related-card-title">内容策略师的定性研究工具包</h4>
-                        <p class="related-excerpt">超越问卷调查:了解受众真正需求的方法。</p>
-                    </a>
-                    
-                    <a href="#" class="related-card">
-                        <div class="related-meta">
-                            <span class="related-category">内容创作</span>
-                            <span class="related-date">2026年2月28日</span>
-                        </div>
-                        <h4 class="related-card-title">为从业者写作,而不是为搜索引擎</h4>
-                        <p class="related-excerpt">如何创建真正服务于专业知识的内容,而不是玩弄算法。</p>
-                    </a>
-                </div>
-            </section>
-
-            <!-- Comments Section -->
-            <section class="comments-section">
-                <h3 class="comments-title">评论</h3>
-                
-                <form class="comment-form" id="commentForm">
-                    <div class="form-group">
-                        <label for="commentName">姓名</label>
-                        <input type="text" id="commentName" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="commentEmail">邮箱 (不会公开)</label>
-                        <input type="email" id="commentEmail" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="commentText">评论内容</label>
-                        <textarea id="commentText" rows="5" required></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">发表评论</button>
-                </form>
-
-                <div class="comments-list" id="commentsList">
-                    <div class="comment-item">
-                        <div class="comment-header">
-                            <strong class="comment-author">陈思</strong>
-                            <span class="comment-date">2026年3月13日</span>
-                        </div>
-                        <p class="comment-text">这太棒了。我做关键词研究已经很多年了,总觉得缺少了什么。从真实对话开始的想法非常有道理。</p>
-                    </div>
-                    
-                    <div class="comment-item">
-                        <div class="comment-header">
-                            <strong class="comment-author">李明</strong>
-                            <span class="comment-date">2026年3月13日</span>
-                        </div>
-                        <p class="comment-text">喜欢Claude Cowork的集成。你有试过在Reddit社区上使用这个方法吗?想知道它在不同平台上的扩展性如何。</p>
-                    </div>
-                </div>
-            </section>
         </article>
     </main>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div>
-                    <h4 class="footer-title">内容的艺术</h4>
-                    <p class="footer-desc">为创作者提供实用的内容策略。</p>
-                </div>
-                <div>
-                    <h4 class="footer-title">导航</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">首页</a></li>
-                        <li><a href="#">文章归档</a></li>
-                        <li><a href="#">关于</a></li>
-                        <li><a href="#">贡献者</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="footer-title">联系</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">微博</a></li>
-                        <li><a href="#">知乎</a></li>
-                        <li><a href="#">RSS订阅</a></li>
-                        <li><a href="#">邮件订阅</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="footer-title">法律</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">隐私政策</a></li>
-                        <li><a href="#">使用条款</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2026 内容的艺术. 保留所有权利。</p>
-            </div>
-        </div>
-    </footer>
+    <div id="footer-placeholder"></div>
 
     <script src="articles.js"></script>
     <script src="script.js"></script>
+    <script src="archive.js"></script>
 </body>
 </html>

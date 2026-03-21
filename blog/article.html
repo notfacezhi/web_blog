@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>文章详情 | 内容的艺术</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;700;900&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Markdown渲染库 -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <div id="header-placeholder"></div>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top" aria-label="Back to top">↑</button>
+
+    <!-- Share Button -->
+    <div class="share-container">
+        <button id="shareBtn" class="share-btn" aria-label="Share article">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="18" cy="5" r="3"></circle>
+                <circle cx="6" cy="12" r="3"></circle>
+                <circle cx="18" cy="19" r="3"></circle>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+            </svg>
+        </button>
+        <div id="shareMenu" class="share-menu">
+            <button data-platform="twitter">Twitter</button>
+            <button data-platform="linkedin">LinkedIn</button>
+            <button data-platform="copy">Copy Link</button>
+        </div>
+    </div>
+
+    <main class="container">
+        <!-- Article Header -->
+        <article class="article-wrapper">
+            <header class="article-header">
+                <div class="article-meta">
+                    <!-- 分类和日期将由JavaScript动态加载 -->
+                </div>
+                
+                <h1 class="article-title">加载中...</h1>
+                
+                <div class="article-author">
+                    <a href="#" class="author-link">作者: </a>
+                </div>
+                
+                <div class="article-divider"></div>
+            </header>
+
+            <!-- Article Content -->
+            <div class="article-content">
+                <p>加载中...</p>
+            </div>
+
+            <!-- Related Articles -->
+            <section class="related-articles">
+                <h3 class="related-title">相关文章</h3>
+                <div class="related-grid" id="relatedArticles">
+                    <!-- 相关文章将由JavaScript动态加载 -->
+                </div>
+            </section>
+
+            <!-- Comments Section -->
+            <section class="comments-section">
+                <h3 class="comments-title">评论</h3>
+                
+                <form class="comment-form" id="commentForm">
+                    <div class="form-group">
+                        <textarea id="commentText" rows="4" placeholder="写下你的评论..." required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">发表评论</button>
+                </form>
+
+                <div class="comments-list" id="commentsList">
+                    <!-- 评论将动态加载 -->
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <script src="articles.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

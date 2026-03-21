@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>贡献者 | 内容的艺术</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;700;900&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <div id="header-placeholder"></div>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top" aria-label="Back to top">↑</button>
+
+    <main class="container">
+        <!-- Contributors Page Content -->
+        <article class="contributors-wrapper">
+            <header class="contributors-header">
+                <h1 class="contributors-title">贡献者</h1>
+            </header>
+
+            <div class="contributors-content">
+                <section class="writers-section">
+                    <div class="writers-grid">
+                        <div class="writer-card">
+                            <div class="writer-avatar">
+                                <img src="img/hz.jpg" alt="可乐鸡翅膀">
+                            </div>
+                            <h3 class="writer-name">可乐鸡翅膀</h3>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="join-section">
+                    <h2 class="join-title">想加入我们吗?</h2>
+                    
+                    <div class="join-intro">
+                        <p>截至 <strong>2026年3月20日</strong>,我们还有 <strong>4个</strong> 固定贡献者名额!如果你有兴趣,欢迎联系我们!</p>
+                        <p>我们也随时欢迎客座作者 —— 那些只想贡献一篇文章的朋友。我们欢迎你最好的想法、学习心得和实战技巧,<em>用你自己的经验和语言</em> 写出来,关于内容营销的一切!</p>
+                        <p>如果你对以上任何一种方式感兴趣,请通过下面的表单联系我们:</p>
+                    </div>
+
+                    <form class="join-form" id="joinForm">
+                        <div class="form-group">
+                            <label for="joinName">姓名 <span class="required">*</span></label>
+                            <input type="text" id="joinName" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="joinEmail">邮箱 <span class="required">*</span></label>
+                            <input type="email" id="joinEmail" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="joinInterest">你感兴趣的是...</label>
+                            <select id="joinInterest">
+                                <option value="">选择一个选项</option>
+                                <option value="regular">成为固定贡献者</option>
+                                <option value="guest">客座作者(一次性投稿)</option>
+                                <option value="both">两者都可以</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="joinPitch">介绍一下你自己或你的想法!</label>
+                            <textarea id="joinPitch" rows="6" placeholder="告诉我们你的背景、擅长的领域,或者想写的主题..."></textarea>
+                        </div>
+
+                        <button type="submit" class="submit-btn">提交申请</button>
+                    </form>
+                </section>
+            </div>
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <script src="script.js"></script>
+    <script>
+        document.getElementById('joinForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('感谢你的申请!我们会尽快与你联系。');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
