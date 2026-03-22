@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>按钮样式选择</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .button-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .button-section h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+
+        /* 样式1：简洁扁平 */
+        .btn-flat {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-flat-primary {
+            background: #007bff;
+            color: white;
+        }
+        .btn-flat-primary:hover {
+            background: #0056b3;
+        }
+        .btn-flat-success {
+            background: #28a745;
+            color: white;
+        }
+        .btn-flat-success:hover {
+            background: #1e7e34;
+        }
+
+        /* 样式2：渐变现代 */
+        .btn-gradient {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.2s;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .btn-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        .btn-gradient-green {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        }
+        .btn-gradient-orange {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        /* 样式3：图标按钮 */
+        .btn-icon {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border: 2px solid #007bff;
+            background: white;
+            color: #007bff;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-icon:hover {
+            background: #007bff;
+            color: white;
+        }
+        .btn-icon-success {
+            border-color: #28a745;
+            color: #28a745;
+        }
+        .btn-icon-success:hover {
+            background: #28a745;
+            color: white;
+        }
+
+        /* 样式4：悬浮卡片 */
+        .btn-card {
+            position: relative;
+            padding: 15px 30px;
+            border: none;
+            background: white;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            color: #333;
+        }
+        .btn-card:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+        }
+        .btn-card-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        /* 样式5：霓虹灯效果 */
+        .btn-neon {
+            padding: 12px 24px;
+            border: 2px solid #00ff88;
+            background: transparent;
+            color: #00ff88;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .btn-neon:hover {
+            background: #00ff88;
+            color: #000;
+            box-shadow: 0 0 20px #00ff88, 0 0 40px #00ff88;
+        }
+
+        /* 样式6：极简线条 */
+        .btn-minimal {
+            padding: 8px 16px;
+            border: 1px solid #ddd;
+            background: transparent;
+            color: #666;
+            border-radius: 2px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-minimal:hover {
+            border-color: #333;
+            color: #333;
+            background: #f9f9f9;
+        }
+
+        /* 编辑器工具栏样式 */
+        .toolbar {
+            display: flex;
+            gap: 8px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+
+        .toolbar-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border: 1px solid #dee2e6;
+            background: white;
+            color: #495057;
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .toolbar-btn:hover {
+            background: #e9ecef;
+            border-color: #adb5bd;
+        }
+
+        .toolbar-btn.primary {
+            background: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+
+        .toolbar-btn.primary:hover {
+            background: #0056b3;
+        }
+
+        /* 位置选项 */
+        .position-demo {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 6px;
+        }
+
+        .position-top {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .position-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎨 按钮样式选择器</h1>
+    <p>选择你喜欢的按钮样式，我会为你集成到编辑器中！</p>
+
+    <!-- 样式1：简洁扁平 -->
+    <div class="button-section">
+        <h3>📋 样式1：简洁扁平</h3>
+        <p>适合：简洁风格、现代界面</p>
+        <div class="button-group">
+            <button class="btn-flat btn-flat-primary">📝 导出 Markdown</button>
+            <button class="btn-flat btn-flat-success">🌐 导出 HTML</button>
+            <button class="btn-flat" style="background: #6c757d; color: white;">💾 保存</button>
+        </div>
+    </div>
+
+    <!-- 样式2：渐变现代 -->
+    <div class="button-section">
+        <h3>🌈 样式2：渐变现代</h3>
+        <p>适合：时尚风格、年轻化界面</p>
+        <div class="button-group">
+            <button class="btn-gradient">📝 导出 Markdown</button>
+            <button class="btn-gradient btn-gradient-green">🌐 导出 HTML</button>
+            <button class="btn-gradient btn-gradient-orange">💾 保存文件</button>
+        </div>
+    </div>
+
+    <!-- 样式3：图标按钮 -->
+    <div class="button-section">
+        <h3>🎯 样式3：图标按钮</h3>
+        <p>适合：工具栏、功能性界面</p>
+        <div class="button-group">
+            <button class="btn-icon">
+                <span>📝</span> 导出 Markdown
+            </button>
+            <button class="btn-icon btn-icon-success">
+                <span>🌐</span> 导出 HTML
+            </button>
+            <button class="btn-icon" style="border-color: #ffc107; color: #ffc107;">
+                <span>💾</span> 保存到本地
+            </button>
+        </div>
+    </div>
+
+    <!-- 样式4：悬浮卡片 -->
+    <div class="button-section">
+        <h3>✨ 样式4：悬浮卡片</h3>
+        <p>适合：简洁优雅、现代设计</p>
+        <div class="button-group">
+            <button class="btn-card">📝 导出 Markdown</button>
+            <button class="btn-card">🌐 导出 HTML</button>
+            <button class="btn-card btn-card-primary">💾 保存全部</button>
+        </div>
+    </div>
+
+    <!-- 样式5：编辑器工具栏 -->
+    <div class="button-section">
+        <h3>🔧 样式5：编辑器工具栏</h3>
+        <p>适合：集成到编辑器顶部</p>
+        <div class="toolbar">
+            <button class="toolbar-btn primary">📝 导出 MD</button>
+            <button class="toolbar-btn">🌐 导出 HTML</button>
+            <button class="toolbar-btn">💾 保存</button>
+            <button class="toolbar-btn">📋 复制</button>
+            <button class="toolbar-btn">🗑️ 清空</button>
+        </div>
+    </div>
+
+    <!-- 位置选择 -->
+    <div class="button-section">
+        <h3>📍 按钮位置选择</h3>
+
+        <div class="position-demo">
+            <h4>顶部居中</h4>
+            <div class="position-top">
+                <button class="btn-flat btn-flat-primary">📝 导出 Markdown</button>
+                <button class="btn-flat btn-flat-success">🌐 导出 HTML</button>
+            </div>
+        </div>
+
+        <div class="position-demo">
+            <h4>右上角悬浮</h4>
+            <p style="font-size: 12px; color: #666;">（示例：固定在右上角的浮动按钮）</p>
+            <div style="position: relative; height: 60px;">
+                <button class="btn-gradient" style="position: absolute; right: 0; top: 0;">
+                    📤 导出
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 霓虹灯效果 -->
+    <div class="button-section">
+        <h3>💡 样式6：霓虹灯效果</h3>
+        <p>适合：暗色主题、科技感界面</p>
+        <div class="button-group">
+            <button class="btn-neon">📝 导出</button>
+            <button class="btn-neon" style="border-color: #ff6b6b; color: #ff6b6b;">🌐 HTML</button>
+        </div>
+    </div>
+
+    <!-- 极简线条 -->
+    <div class="button-section">
+        <h3✂️ 样式7：极简线条</h3>
+        <p>适合：极简风格、文艺范界面</p>
+        <div class="button-group">
+            <button class="btn-minimal">导出 Markdown</button>
+            <button class="btn-minimal">导出 HTML</button>
+            <button class="btn-minimal">保存</button>
+        </div>
+    </div>
+
+    <div class="button-section">
+        <h3>🎯 你的选择</h3>
+        <p>告诉我你喜欢哪个样式和位置，我会为你集成到编辑器中！</p>
+        <p>例如：</p>
+        <ul>
+            <li>"我喜欢样式2的渐变按钮，放在编辑器顶部"</li>
+            <li>"我喜欢样式5的工具栏样式"</li>
+            <li>"我喜欢样式3的图标按钮，放在右上角"</li>
+        </ul>
+    </div>
+</body>
+</html>
