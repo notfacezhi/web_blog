@@ -1,241 +1,117 @@
-// 文章数据存储
-// 后期可以直接替换为从数据库API获取
-const articlesData = {
-    'article-1': {
-        id: 'article-1',
-        title: '我不再猜测写什么,而是开始倾听',
-        author: '可乐鸡翅膀',
-        date: '2026-03-12',
-        categories: ['内容策略', '内容创作'],
-        tags: ['人工智能', '艺术', '注意力', '观众', '内容关怀', '内容框架', '内容策略', '内容理论', '好奇心', '电子邮件营销', '环保主义', '好主意', '灵感', '法律', '营销', '营销策略', '营销理论', '讲故事', '文字游戏', '文化批评'],
-        excerpt: '关于味觉的对话:当我们谈论"味觉"时,我们究竟指的是什么?',
-        content: `大多数内容日历都是从[关键词研究](#)和捕获历史搜索量开始的。**而我的方法是从倾听人们如何真实地谈论他们的问题开始。**
+// 文章索引配置
+// 文章列表从后端 API 自动获取，无需手动维护
+let articlesList = [];
 
-在最近的一个客户项目中,我需要为一家受监管行业的B2B SaaS公司构建内容路线图。我没有去拉取关键词搜索量,而是去了他们的受众相互交流的地方——一个拥有数千名该领域从业者的社区群组。
+// 文章缓存
+const articlesCache = {};
 
-我收集了大约50篇帖子,通过使用[Claude Cowork](#)的结构化定性分析流程进行处理,最终得到了一个与人们正在积极讨论的问题相关的优先级内容待办清单。
-
-## 1. 准备数据
-
-我收集了大约三个月的社区讨论帖子——手动将帖子和热门评论复制到一个文本文件中。你也可以使用像Apify这样的爬虫工具来处理公开群组。
-
-我只筛选社区成员的帖子(不包括管理员公告),限定在特定的日期范围内,并保持原始数据的完整性。
-
-## 2. 设置工作空间
-
-我创建了一个新的Claude项目并上传了原始讨论文件。这样可以让Claude在单次对话中获得完整的上下文,而不会触及token限制。
-
-然后我编写了一个简单的提示词模板来提取:
-
-- 正在讨论的核心问题
-- 情绪强度(挫折感、困惑、紧迫性)
-- 提到的具体痛点
-- 人们正在提出的问题
-
-## 3. 运行分析
-
-我让Claude分批处理这些讨论,为每个帖子标记问题主题和情感标记。输出的是一个我可以排序和筛选的结构化数据集。
-
-> "目标不是找到人们在搜索什么,而是在他们知道如何搜索之前,找到他们正在挣扎的问题。"
-
-从那里开始,我将相似的问题聚类,按频率和情感权重对它们进行排名,并将它们映射到内容格式(指南、模板、案例研究)。
-
-## 4. 构建内容路线图
-
-最后一步是将洞察转化为行动。我创建了一个优先级待办清单,包含:
-
-1. 问题陈述(用受众的话)
-2. 内容角度(我们如何解决它)
-3. 格式建议
-4. SEO机会(如果有的话)
-
-这种方法颠覆了传统的内容规划模式。我不是从关键词开始并希望它们匹配意图,而是从经过验证的意图开始,然后针对搜索进行优化。
-
-## 为什么这种方法更有效
-
-关键词研究告诉你人们在搜索框中输入什么。社区倾听告诉你什么让他们夜不能寐。
-
-### 两种方法对比
-
-| 维度 | 传统关键词研究 | 社区倾听方法 |
-| --- | --- | --- |
-| 数据来源 | 搜索引擎数据 | 真实用户对话 |
-| 洞察深度 | 表面搜索意图 | 深层问题痛点 |
-| 内容质量 | 优化排名 | 引起共鸣 |
-| 执行时间 | 快速 | 需要时间投入 |
-| 长期效果 | 依赖SEO | 自然传播 |
-
-通过这个过程产生的内容不仅仅是排名——它能引起共鸣。因为它建立在真实的问题上,用真实的语言表达,来自真实的对话。
-
-当你解决真实的问题时,参与度、分享和反向链接自然会随之而来。`
-    },
-    'article-2': {
-        id: 'article-2',
-        title: '如何用图片让你的博客更生动',
-        author: '可乐鸡翅膀',
-        date: '2026-03-15',
-        categories: ['内容创作'],
-        tags: ['内容创作', '图片', '视觉设计'],
-        excerpt: '一图胜千言。学习如何在 Markdown 文章中正确使用图片,让你的内容更有吸引力。',
-        content: `在写博客的时候,合适的图片能让内容更加生动有趣。今天我来分享一下如何在 Markdown 文章中使用图片。
-
-## 基础语法
-
-Markdown 中插入图片的语法非常简单:
-
-\`\`\`markdown
-![图片描述](图片路径)
-\`\`\`
-
-**示例:**
-
-![博客配图示例](img/hz.jpg)
-
-上面这张图片就是用 Markdown 语法插入的。语法是:
-\`![博客配图示例](img/hz.jpg)\`
-
-## 图片路径的三种方式
-
-### 1. 相对路径
-适合本地图片,相对于 HTML 文件的位置:
-\`\`\`markdown
-![本地图片](img/photo.jpg)
-![上级目录](../images/banner.jpg)
-\`\`\`
-
-### 2. 绝对路径
-从网站根目录开始:
-\`\`\`markdown
-![绝对路径](/blog/img/logo.jpg)
-\`\`\`
-
-### 3. 外部链接
-使用完整的 URL:
-\`\`\`markdown
-![外部图片](https://example.com/image.jpg)
-\`\`\`
-
-## 图片描述的重要性
-
-图片描述(alt 文本)有两个作用:
-
-1. **无障碍访问** - 屏幕阅读器会读取这段文字
-2. **SEO 优化** - 搜索引擎通过描述理解图片内容
-3. **加载失败时显示** - 当图片无法加载时,会显示这段文字
-
-**好的描述示例:**
-\`\`\`markdown
-![一位程序员在咖啡馆用笔记本电脑写代码](img/coding.jpg)
-\`\`\`
-
-**不好的描述:**
-\`\`\`markdown
-![图片1](img/1.jpg)
-\`\`\`
-
-## 实用技巧
-
-### 控制图片大小
-虽然 Markdown 本身不支持设置图片大小,但我们的 CSS 已经做了优化:
-
-- 图片最大宽度 100%,不会超出容器
-- 自动居中显示
-- 保持原始宽高比
-
-### 图片命名规范
-建议使用有意义的文件名:
-- ✅ \`user-profile-avatar.jpg\`
-- ✅ \`dashboard-screenshot-2026.png\`
-- ❌ \`IMG_001.jpg\`
-- ❌ \`屏幕截图.png\`
-
-### 图片格式选择
-
-| 格式 | 适用场景 | 优点 | 缺点 |
-| --- | --- | --- | --- |
-| JPG | 照片、复杂图像 | 文件小 | 有损压缩 |
-| PNG | 图标、透明背景 | 无损、支持透明 | 文件较大 |
-| WebP | 现代浏览器 | 体积小、质量高 | 旧浏览器不支持 |
-| SVG | 矢量图、图标 | 可缩放、体积小 | 不适合照片 |
-
-## 优化建议
-
-1. **压缩图片** - 使用工具压缩图片,减少加载时间
-2. **统一尺寸** - 文章配图保持一致的宽高比
-3. **懒加载** - 对于长文章,可以考虑图片懒加载
-4. **备用方案** - 重要图片最好有本地备份
-
-## 总结
-
-图片是博客内容的重要组成部分,合理使用能大大提升阅读体验。记住这几点:
-
-- 使用清晰、相关的图片
-- 写好图片描述
-- 优化图片大小
-- 选择合适的格式
-
-现在就去试试在你的文章中添加图片吧!`
-    },
-    'article-3': {
-        id: 'article-3',
-        title: '如何构建真正被使用的内容日历',
-        author: '可乐鸡翅膀',
-        date: '2026-03-08',
-        categories: ['内容策略', '工作流程'],
-        tags: ['内容策略', '工作流程', '内容日历'],
-        excerpt: '大多数内容日历都死在电子表格里。这里教你如何构建一个真正推动执行的日历。',
-        content: `这是第三篇文章的内容...`
-    },
-    'article-4': {
-        id: 'article-4',
-        title: '内容策略师的定性研究工具包',
-        author: '可乐鸡翅膀',
-        date: '2026-03-05',
-        categories: ['研究方法'],
-        tags: ['研究方法', '定性研究', '用户研究'],
-        excerpt: '超越问卷调查:了解受众真正需求的方法。',
-        content: `这是第四篇文章的内容...`
-    },
-    'article-5': {
-        id: 'article-5',
-        title: '为从业者写作,而不是为搜索引擎',
-        author: '可乐鸡翅膀',
-        date: '2026-02-28',
-        categories: ['内容创作', 'SEO'],
-        tags: ['内容创作', 'SEO', '写作技巧'],
-        excerpt: '如何创建真正服务于专业知识的内容,而不是玩弄算法。',
-        content: `## 1. 准备数据
-
-我收集了大约三个月的社区讨论帖子——手动将帖子和热门评论复制到一个文本文件中。你也可以使用像Apify这样的爬虫工具来处理公开群组。
-
-我只筛选社区成员的帖子(不包括管理员公告),限定在特定的日期范围内,并保持原始数据的完整性。`
+// 从 API 获取文章列表
+async function fetchArticlesList() {
+    if (articlesList.length > 0) {
+        return articlesList; // 已加载过
     }
-};
-
-// 获取文章数据的函数
-function getArticle(articleId) {
-    return articlesData[articleId];
+    
+    try {
+        const apiUrl = getApiUrl('articles');
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+            throw new Error('获取文章列表失败');
+        }
+        articlesList = await response.json();
+        return articlesList;
+    } catch (error) {
+        console.error('获取文章列表失败:', error);
+        return [];
+    }
 }
 
-// 获取所有文章列表
-function getAllArticles() {
-    return Object.values(articlesData);
+// 解析 Front Matter (YAML 格式的元数据)
+function parseFrontMatter(content) {
+    const frontMatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/;
+    const match = content.match(frontMatterRegex);
+    
+    if (!match) {
+        return { metadata: {}, content: content };
+    }
+    
+    const frontMatter = match[1];
+    const markdownContent = match[2];
+    
+    const metadata = {};
+    frontMatter.split('\n').forEach(line => {
+        const colonIndex = line.indexOf(':');
+        if (colonIndex > 0) {
+            const key = line.substring(0, colonIndex).trim();
+            const value = line.substring(colonIndex + 1).trim();
+            
+            // 处理数组类型 (用逗号分隔)
+            if (key === 'categories' || key === 'tags') {
+                metadata[key] = value.split(',').map(item => item.trim());
+            } else {
+                metadata[key] = value;
+            }
+        }
+    });
+    
+    return { metadata, content: markdownContent };
+}
+
+// 异步加载文章
+async function getArticle(articleId) {
+    // 检查缓存
+    if (articlesCache[articleId]) {
+        return articlesCache[articleId];
+    }
+    
+    try {
+        const apiUrl = getApiUrl('article', `/${articleId}`);
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+            throw new Error(`文章 ${articleId} 未找到`);
+        }
+        
+        const markdownText = await response.text();
+        const { metadata, content } = parseFrontMatter(markdownText);
+        
+        // 合并元数据和内容
+        const article = {
+            ...metadata,
+            content: content
+        };
+        
+        // 缓存文章
+        articlesCache[articleId] = article;
+        
+        return article;
+    } catch (error) {
+        console.error('加载文章失败:', error);
+        return null;
+    }
+}
+
+// 获取所有文章列表 (异步)
+async function getAllArticles() {
+    // 先获取文章列表
+    const ids = await fetchArticlesList();
+    
+    const articles = [];
+    for (const articleId of ids) {
+        const article = await getArticle(articleId);
+        if (article) {
+            articles.push(article);
+        }
+    }
+    return articles;
 }
 
 // 获取所有标签
-function getAllTags() {
+async function getAllTags() {
+    const articles = await getAllArticles();
     const tagsSet = new Set();
-    Object.values(articlesData).forEach(article => {
+    articles.forEach(article => {
         if (article.tags) {
             article.tags.forEach(tag => tagsSet.add(tag));
         }
     });
     return Array.from(tagsSet).sort();
 }
-
-// 后期迁移到数据库时,只需修改这两个函数为API调用
-// 例如:
-// async function getArticle(articleId) {
-//     const response = await fetch(`/api/articles/${articleId}`);
-//     return await response.json();
-// }

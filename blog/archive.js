@@ -3,18 +3,21 @@ document.addEventListener('DOMContentLoaded', function() {
     loadArticlesList();
 });
 
-// 加载文章列表
-function loadArticlesList() {
-    const articlesList = document.getElementById('articlesList');
-    if (!articlesList) return;
+// 加载文章列表 (异步)
+async function loadArticlesList() {
+    const articlesListElement = document.getElementById('articlesList');
+    if (!articlesListElement) return;
     
-    const articles = getAllArticles();
+    // 显示加载中
+    articlesListElement.innerHTML = '<p class="no-articles">加载中...</p>';
+    
+    const articles = await getAllArticles();
     
     // 按日期排序(最新的在前)
     articles.sort((a, b) => new Date(b.date) - new Date(a.date));
     
     if (articles.length === 0) {
-        articlesList.innerHTML = '<p class="no-articles">暂无文章</p>';
+        articlesListElement.innerHTML = '<p class="no-articles">暂无文章</p>';
         return;
     }
     
@@ -39,5 +42,5 @@ function loadArticlesList() {
         `;
     });
     
-    articlesList.innerHTML = articlesHTML;
+    articlesListElement.innerHTML = articlesHTML;
 }

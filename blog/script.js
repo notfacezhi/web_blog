@@ -70,8 +70,8 @@ marked.setOptions({
     mangle: false
 });
 
-// 加载并渲染文章
-function loadArticle() {
+// 加载并渲染文章 (异步)
+async function loadArticle() {
     // 从URL获取文章ID
     const urlParams = new URLSearchParams(window.location.search);
     const articleId = urlParams.get('id');
@@ -81,8 +81,8 @@ function loadArticle() {
         return;
     }
     
-    // 获取文章数据
-    const article = getArticle(articleId);
+    // 异步获取文章数据
+    const article = await getArticle(articleId);
     
     if (!article) {
         console.error('文章未找到');
@@ -97,7 +97,7 @@ function loadArticle() {
     renderMarkdownContent(article.content);
     
     // 渲染相关文章
-    renderRelatedArticles(article);
+    await renderRelatedArticles(article);
     
     // 渲染完成后初始化目录
     initTableOfContents();
@@ -153,20 +153,20 @@ function renderMarkdownContent(markdown) {
     contentContainer.innerHTML = htmlContent;
 }
 
-// 渲染相关文章
-function renderRelatedArticles(currentArticle) {
+// 渲染相关文章 (异步)
+async function renderRelatedArticles(currentArticle) {
     const relatedContainer = document.getElementById('relatedArticles');
     if (!relatedContainer) return;
     
-    const allArticles = getAllArticles();
+    const allArticles = await getAllArticles();
     
     // 过滤掉当前文章,找到相关文章(同类别或同标签)
     let relatedArticles = allArticles.filter(article => {
         if (article.id === currentArticle.id) return false;
         
         // 检查是否有相同的分类或标签
-        const hasCommonCategory = article.categories.some(cat => 
-            currentArticle.categories.includes(cat)
+        const hasCommonCategory = article.categories && article.categories.some(cat => 
+            currentArticle.categories && currentArticle.categories.includes(cat)
         );
         const hasCommonTag = article.tags && currentArticle.tags && 
             article.tags.some(tag => currentArticle.tags.includes(tag));
