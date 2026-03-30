@@ -18,8 +18,8 @@ const API_CONFIG = {
     
     // API 端点
     endpoints: {
-        articles: '/api/articles',
-        article: '/api/article'
+        articles: '/api_webblog/articles',
+        article: '/api_webblog/article'
     }
 };
 

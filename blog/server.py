@@ -36,7 +36,7 @@ BASE_DIR = Path(__file__).parent
 ARTICLES_DIR = BASE_DIR / "articles"
 
 
-@app.get("/api/articles", response_model=List[str], summary="获取文章列表")
+@app.get("/api_webblog/articles", response_model=List[str], summary="获取文章列表")
 async def get_articles():
     """
     获取所有文章的 ID 列表
@@ -58,7 +58,7 @@ async def get_articles():
     return article_ids
 
 
-@app.get("/api/article/{article_id}", response_class=PlainTextResponse, summary="获取文章内容")
+@app.get("/api_webblog/article/{article_id}", response_class=PlainTextResponse, summary="获取文章内容")
 async def get_article(article_id: str):
     """
     获取指定文章的 Markdown 内容
@@ -84,8 +84,8 @@ async def root():
         "service": "博客 API 服务",
         "version": "1.0.0",
         "endpoints": {
-            "articles": "/api/articles",
-            "article": "/api/article/{id}",
+            "articles": "/api_webblog/articles",
+            "article": "/api_webblog/article/{id}",
             "docs": "/docs"
         }
     }
@@ -99,7 +99,7 @@ def main():
 ╠════════════════════════════════════════════════════════╣
 ║  访问地址: http://localhost:8091                        ║
 ║  API 文档: http://localhost:8091/docs                   ║
-║  文章列表: http://localhost:8091/api/articles           ║
+║  文章列表: http://localhost:8091/api_webblog/articles   ║
 ║  停止服务: Ctrl+C                                       ║
 ╚════════════════════════════════════════════════════════╝
     """)
