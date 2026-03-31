@@ -13,7 +13,7 @@ blog_manager/dist-ssr
 *.local
 
 # Blog content directories
-blog/article/
+blog/articles/
 blog/img/
 
 # Editor directories and files
