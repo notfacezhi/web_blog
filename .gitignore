@@ -12,6 +12,10 @@ blog_manager/dist
 blog_manager/dist-ssr
 *.local
 
+# Blog content directories
+blog/article/
+blog/img/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
