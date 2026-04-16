@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="胡智 - AI咨询专家，提供豆包、DeepSeek、Coze、Dify等AI工具咨询服务">
+    <title>胡智 - AI咨询专家</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-primary: #0891B2;
+            --color-primary-light: #22D3EE;
+            --color-cta: #22C55E;
+            --color-cta-hover: #16A34A;
+            --color-bg: #ECFEFF;
+            --color-bg-alt: #F0FDFA;
+            --color-text: #164E63;
+            --color-text-muted: #0E7490;
+            --color-border: #CCFBF1;
+            --color-white: #FFFFFF;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --radius-sm: 6px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+        }
+
+        body {
+            font-family: 'Archivo', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 520px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--color-white);
+            border-radius: var(--radius-lg);
+            padding: 32px 28px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--color-border);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--color-primary);
+            margin-bottom: 16px;
+        }
+
+        .name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--color-text);
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--color-primary);
+            color: var(--color-white);
+            padding: 4px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        .title {
+            font-size: 15px;
+            color: var(--color-text-muted);
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .experience {
+            font-size: 13px;
+            color: var(--color-text-muted);
+            display: inline-block;
+            background: var(--color-bg-alt);
+            padding: 6px 16px;
+            border-radius: var(--radius-md);
+            margin-top: 8px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin: 24px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 16px 12px;
+            background: var(--color-bg-alt);
+            border-radius: var(--radius-md);
+        }
+
+        .stat-number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--color-text-muted);
+        }
+
+        .intro-text {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--color-text);
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--color-text);
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--color-border);
+            letter-spacing: -0.01em;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .skill-tag {
+            background: var(--color-bg-alt);
+            color: var(--color-text);
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+            border: 1px solid var(--color-border);
+            transition: all 0.2s ease;
+            cursor: default;
+        }
+
+        .expertise-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .expertise-item {
+            background: var(--color-bg-alt);
+            color: var(--color-text);
+            padding: 8px 14px;
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            font-weight: 500;
+            border: 1px solid var(--color-border);
+        }
+
+        .cases {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .case-item {
+            background: var(--color-bg-alt);
+            padding: 16px;
+            border-radius: var(--radius-md);
+            border-left: 3px solid var(--color-primary);
+        }
+
+        .case-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--color-text);
+            margin-bottom: 6px;
+        }
+
+        .case-desc {
+            font-size: 13px;
+            color: var(--color-text-muted);
+            line-height: 1.6;
+        }
+
+        .service-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .service-tag {
+            background: var(--color-white);
+            color: var(--color-text);
+            padding: 10px 16px;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 500;
+            border: 1px solid var(--color-border);
+        }
+
+        .wechat-section {
+            text-align: center;
+            padding: 16px 0;
+        }
+
+        .wechat-hint {
+            font-size: 15px;
+            color: var(--color-text);
+            margin-bottom: 16px;
+        }
+
+        .qr-code {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 16px;
+            background: var(--color-bg-alt);
+            border-radius: var(--radius-md);
+            padding: 12px;
+            border: 1px solid var(--color-border);
+        }
+
+        .qr-code img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .wechat-id {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-text);
+            padding: 12px 20px;
+            background: var(--color-bg-alt);
+            border-radius: var(--radius-md);
+            display: inline-block;
+            border: 1px solid var(--color-border);
+        }
+
+        .wechat-id span {
+            color: var(--color-primary);
+            font-weight: 700;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--color-cta);
+            color: var(--color-white);
+            padding: 14px 32px;
+            border-radius: var(--radius-md);
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-top: 16px;
+            transition: background 0.2s ease;
+            cursor: pointer;
+            border: none;
+            font-family: 'Archivo', sans-serif;
+        }
+
+        .cta-button:hover {
+            background: var(--color-cta-hover);
+        }
+
+        .cta-button:active {
+            transform: translateY(1px);
+        }
+
+        .footer {
+            text-align: center;
+            color: var(--color-text-muted);
+            font-size: 13px;
+            margin-top: 24px;
+            padding: 16px;
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 24px 20px;
+            }
+
+            .name {
+                font-size: 22px;
+            }
+
+            .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <img src="img/person.jpg" alt="胡智" class="avatar">
+                <div class="name">胡智 <span class="badge">AI专家</span></div>
+                <div class="title">AI咨询 · 技术顾问 · 求职指导</div>
+                <div class="experience">5年AI实战经验</div>
+            </div>
+
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">5+</div>
+                    <div class="stat-label">年经验</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">10+</div>
+                    <div class="stat-label">落地项目</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">咨询服务</div>
+                </div>
+            </div>
+
+            <div class="intro-text">
+                专注于<span class="highlight">AI技术落地与应用</span>，帮助AI小白快速入门，为求职者提供专业指导。擅长大模型应用、Agent开发、工作流设计等领域。
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="section-title">核心技能</div>
+            <div class="skills-grid">
+                <div class="skill-tag">豆包</div>
+                <div class="skill-tag">DeepSeek</div>
+                <div class="skill-tag">Coze</div>
+                <div class="skill-tag">Dify</div>
+                <div class="skill-tag">GPT系列</div>
+                <div class="skill-tag">Claude</div>
+                <div class="skill-tag">Gemini</div>
+                <div class="skill-tag">Cursor</div>
+                <div class="skill-tag">Windsurf</div>
+                <div class="skill-tag">Vibe Coding</div>
+                <div class="skill-tag">Agent开发</div>
+                <div class="skill-tag">工作流设计</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="section-title">专业领域</div>
+            <div class="expertise-list">
+                <div class="expertise-item">图像生成</div>
+                <div class="expertise-item">目标检测</div>
+                <div class="expertise-item">GAN应用</div>
+                <div class="expertise-item">图像增强</div>
+                <div class="expertise-item">图像去噪</div>
+                <div class="expertise-item">扭曲矫正</div>
+                <div class="expertise-item">一键消除</div>
+                <div class="expertise-item">大模型微调</div>
+                <div class="expertise-item">Agent落地</div>
+                <div class="expertise-item">工作流自动化</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="section-title">成功案例</div>
+            <div class="cases">
+                <div class="case-item">
+                    <div class="case-title">AI智能客服系统</div>
+                    <div class="case-desc">基于大模型的智能客服解决方案，支持多轮对话、知识库检索、意图识别</div>
+                </div>
+                <div class="case-item">
+                    <div class="case-title">海报创意设计AI</div>
+                    <div class="case-desc">AI驱动的海报自动生成系统，一键生成多种风格的创意海报</div>
+                </div>
+                <div class="case-item">
+                    <div class="case-title">AI一键变清晰</div>
+                    <div class="case-desc">图像超分辨率重建技术，让模糊图片瞬间变清晰</div>
+                </div>
+                <div class="case-item">
+                    <div class="case-title">智能一键消除</div>
+                    <div class="case-desc">基于深度学习的图像修复技术，智能去除图片中的不需要元素</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="section-title">我能帮助你</div>
+            <div class="service-tags">
+                <div class="service-tag">AI小白入门</div>
+                <div class="service-tag">AI求职指导</div>
+                <div class="service-tag">工具使用培训</div>
+                <div class="service-tag">技术方案咨询</div>
+                <div class="service-tag">项目落地指导</div>
+                <div class="service-tag">学习路线规划</div>
+            </div>
+            <div class="intro-text" style="margin-top: 16px;">
+                无论你是想了解AI、学习AI工具，还是寻求AI项目落地方案，或者准备AI相关岗位求职，我都能为你提供<span class="highlight">专业、实用</span>的指导。
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="section-title">联系我</div>
+            <div class="wechat-section">
+                <div class="wechat-hint">扫码添加微信，开启你的AI之旅</div>
+                <div class="qr-code">
+                    <img src="img/wechat_code.jpg" alt="微信二维码" onerror="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:var(--color-text-muted);font-size:13px;text-align:center;\'>请添加微信二维码图片<br>img/wechat_code.jpg</div>'">
+                </div>
+                <div class="wechat-id">
+                    微信号：<span>hzfxm3344</span>
+                </div>
+                <div style="margin-top: 16px; font-size: 13px; color: var(--color-text-muted);">
+                    快速响应 · 专业解答 · 实战经验分享
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            © 2026 胡智 AI咨询 · 让AI触手可及
+        </div>
+    </div>
+</body>
+</html>
