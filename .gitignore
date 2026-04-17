@@ -14,7 +14,7 @@ blog_manager/dist-ssr
 
 # Blog content directories
 blog/articles/
-blog/img/
+
 
 # Editor directories and files
 .vscode/*
