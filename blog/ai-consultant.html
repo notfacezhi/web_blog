@@ -280,6 +280,38 @@
             font-weight: 700;
         }
 
+        .wechat-id-container {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .copy-btn {
+            background: var(--color-primary);
+            color: var(--color-white);
+            border: none;
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Archivo', sans-serif;
+        }
+
+        .copy-btn:hover {
+            background: var(--color-primary-light);
+            transform: translateY(-1px);
+        }
+
+        .copy-btn:active {
+            transform: translateY(0);
+        }
+
+        .copy-btn.copied {
+            background: var(--color-cta);
+        }
+
         .cta-button {
             display: inline-block;
             background: var(--color-cta);
@@ -442,8 +474,11 @@
                 <div class="qr-code">
                     <img src="img/wechat_code.jpg" alt="微信二维码" onerror="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:var(--color-text-muted);font-size:13px;text-align:center;\'>请添加微信二维码图片<br>img/wechat_code.jpg</div>'">
                 </div>
-                <div class="wechat-id">
-                    微信号：<span>hzfxm3344</span>
+                <div class="wechat-id-container">
+                    <div class="wechat-id">
+                        微信号：<span id="wechatId">hzfxm3344</span>
+                    </div>
+                    <button class="copy-btn" onclick="copyWechatId()">复制</button>
                 </div>
                 <div style="margin-top: 16px; font-size: 13px; color: var(--color-text-muted);">
                     快速响应 · 专业解答 · 实战经验分享
@@ -455,5 +490,58 @@
             © 2026 胡智 AI咨询 · 让AI触手可及
         </div>
     </div>
+
+    <script>
+        function copyWechatId() {
+            const wechatId = document.getElementById('wechatId').textContent;
+            const btn = event.target;
+            
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(wechatId).then(() => {
+                    showCopySuccess(btn);
+                }).catch(err => {
+                    fallbackCopy(wechatId, btn);
+                });
+            } else {
+                fallbackCopy(wechatId, btn);
+            }
+        }
+        
+        function fallbackCopy(text, btn) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-9999px';
+            textArea.style.top = '0';
+            document.body.appendChild(textArea);
+            
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showCopySuccess(btn);
+                } else {
+                    alert('复制失败，微信号：' + text);
+                }
+            } catch (err) {
+                alert('复制失败，微信号：' + text);
+            }
+            
+            document.body.removeChild(textArea);
+        }
+        
+        function showCopySuccess(btn) {
+            const originalText = btn.textContent;
+            btn.textContent = '已复制';
+            btn.classList.add('copied');
+            
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.classList.remove('copied');
+            }, 2000);
+        }
+    </script>
 </body>
 </html>
